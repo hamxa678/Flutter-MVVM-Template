@@ -5,14 +5,15 @@ import 'package:flutter_mvvm_template/core/enums/view_state.dart';
 import 'package:flutter_mvvm_template/core/models/body/signup_body.dart';
 import 'package:flutter_mvvm_template/core/models/responses/auth_response.dart';
 import 'package:flutter_mvvm_template/core/others/base_view_model.dart';
-import 'package:flutter_mvvm_template/core/services/auth_service.dart';
+import 'package:flutter_mvvm_template/core/services/firebase_auth_service.dart';
 import 'package:flutter_mvvm_template/core/services/file_picker_service.dart';
 import 'package:get/get.dart';
 
 import '../../../../locator.dart';
 
 class SignUpViewModel extends BaseViewModel {
-  final AuthService _authService = locator<AuthService>();
+  final FirebaseAuthService _FirebaseAuthService =
+      locator<FirebaseAuthService>();
   final FilePickerService _imagePickerService = locator<FilePickerService>();
   int? selectedGenderIndex;
   SignUpBody signUpBody = SignUpBody();
@@ -39,7 +40,8 @@ class SignUpViewModel extends BaseViewModel {
   requestSignUp() async {
     setState(ViewState.busy);
     signUpBody.gender = selectedGenderIndex == 0 ? "Male" : "Female";
-    response = await _authService.signupWithEmailAndPassword(signUpBody);
+    response =
+        await _FirebaseAuthService.signupWithEmailAndPassword(signUpBody);
     if (!response.success) {
       Get.dialog(const AuthDialog(title: 'Title', message: 'Message here...'));
     } else {

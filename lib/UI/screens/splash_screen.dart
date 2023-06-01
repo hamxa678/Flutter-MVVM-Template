@@ -1,4 +1,3 @@
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_template/UI/custom_widget/dialogbox/network_error_dialog.dart';
@@ -7,7 +6,7 @@ import 'package:flutter_mvvm_template/UI/screens/onboarding/onboarding_screen.da
 import 'package:flutter_mvvm_template/UI/screens/root/root_screen.dart';
 import 'package:flutter_mvvm_template/core/models/other_models/onboarding.dart';
 import 'package:flutter_mvvm_template/core/others/logger_customizations/custom_logger.dart';
-import 'package:flutter_mvvm_template/core/services/auth_service.dart';
+import 'package:flutter_mvvm_template/core/services/firebase_auth_service.dart';
 import 'package:flutter_mvvm_template/core/services/local_storage_service.dart';
 import 'package:flutter_mvvm_template/core/services/notifications_service.dart';
 
@@ -24,7 +23,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final _authService = locator<AuthService>();
+  final _FirebaseAuthService = locator<FirebaseAuthService>();
   final _localStorageService = locator<LocalStorageService>();
   final _notificationService = locator<NotificationsService>();
   List<Onboarding> onboardingList = [];
@@ -79,13 +78,13 @@ class _SplashScreenState extends State<SplashScreen> {
           preCachedImages: preCachedImages));
       return;
     }
-    await _authService.doSetup();
+    await _FirebaseAuthService.doSetup();
 
     ///
     ///checking if the user is login or not
     ///
-    log.d('@_initialSetup. Login State: ${_authService.isLogin}');
-    if (_authService.isLogin) {
+    log.d('@_initialSetup. Login State: ${_FirebaseAuthService.isLogin}');
+    if (_FirebaseAuthService.isLogin) {
       Get.off(() => const RootScreen());
     } else {
       Get.off(() => LoginScreen());

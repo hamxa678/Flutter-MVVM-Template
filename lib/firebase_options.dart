@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -47,31 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBvxJIG7bbmRt_5lPZTsqTm9laTXwh8fww',
-    appId: '1:816831984722:web:a4a3dfec5f753b5c749b8b',
-    messagingSenderId: '816831984722',
-    projectId: 'antonx-flutter-template',
-    authDomain: 'antonx-flutter-template.firebaseapp.com',
-    storageBucket: 'antonx-flutter-template.appspot.com',
-    measurementId: 'G-HYLR3KGRNY',
+    apiKey: 'AIzaSyC5vdk3n8b7ET_6y1BJ1Ke66Rl9VNY_uhs',
+    appId: '1:646748873521:web:0e87789c70ab687a198610',
+    messagingSenderId: '646748873521',
+    projectId: 'dumy-bdc71',
+    authDomain: 'dumy-bdc71.firebaseapp.com',
+    storageBucket: 'dumy-bdc71.appspot.com',
+    measurementId: 'G-JXRH3JMBL1',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDrPWQANyOoeEQeRFMT-FriKU2l3pxwfpA',
-    appId: '1:816831984722:android:10aa607d8f7f89b4749b8b',
-    messagingSenderId: '816831984722',
-    projectId: 'antonx-flutter-template',
-    storageBucket: 'antonx-flutter-template.appspot.com',
+    apiKey: 'AIzaSyBX930WsFuMIZGv7fwq59RW9XOWlstCdcg',
+    appId: '1:646748873521:android:e6bcf44ba0e1f524198610',
+    messagingSenderId: '646748873521',
+    projectId: 'dumy-bdc71',
+    storageBucket: 'dumy-bdc71.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCtKOS2h9xkrqi_2cZionSLCqvAhYc-Yss',
-    appId: '1:816831984722:ios:5a00c0695b237284749b8b',
-    messagingSenderId: '816831984722',
-    projectId: 'antonx-flutter-template',
-    storageBucket: 'antonx-flutter-template.appspot.com',
-    iosClientId:
-        '816831984722-rnmhv8pt2rrq4b3tpi1i6o72rddqo074.apps.googleusercontent.com',
-    iosBundleId: 'com.example.flutterAntonxBoilerplate',
+    apiKey: 'AIzaSyCAFwIJ8IPImKrl9xEBa0xt-TT0X158Y5s',
+    appId: '1:646748873521:ios:155abefea913d1fa198610',
+    messagingSenderId: '646748873521',
+    projectId: 'dumy-bdc71',
+    storageBucket: 'dumy-bdc71.appspot.com',
+    iosClientId: '646748873521-sl65v528d3ilf9fn9pfl83bl9s142cmv.apps.googleusercontent.com',
+    iosBundleId: 'com.example.flutterMvvmTemplate',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCAFwIJ8IPImKrl9xEBa0xt-TT0X158Y5s',
+    appId: '1:646748873521:ios:155abefea913d1fa198610',
+    messagingSenderId: '646748873521',
+    projectId: 'dumy-bdc71',
+    storageBucket: 'dumy-bdc71.appspot.com',
+    iosClientId: '646748873521-sl65v528d3ilf9fn9pfl83bl9s142cmv.apps.googleusercontent.com',
+    iosBundleId: 'com.example.flutterMvvmTemplate',
   );
 }

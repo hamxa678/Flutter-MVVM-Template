@@ -45,32 +45,8 @@ class FilePickerService {
         String? jpegPath = await HeicToJpg.convert(selectedImage.path);
         if (jpegPath != null) selectedImage = File(jpegPath);
       }
-      // final newPath = '$dir/test.jpg';
-      // final compressedImage = await _compressImageFile(selectedImage, newPath);
-      // if (compressedImage != null) {
-      //   selectedImage = compressedImage;
-      // }
     }
     return selectedImage;
   }
 
-  // Future<File?> _compressImageFile(File file, String targetPath) async {
-  //   debugPrint(
-  //       '@compressImageFile => Size before compression: ${await file.length()}');
-  //   var result = await FlutterImageCompress.compressAndGetFile(
-  //     file.absolute.path,
-  //     targetPath,
-  //     quality: 70,
-  //   );
-
-  //   if (result != null) {
-  //     print('File compressed successfully');
-  //   } else {
-  //     print('Compressed file path is null');
-  //   }
-
-  //   debugPrint(
-  //       '@compressImageFile => Size after compression: ${await result?.length()}');
-  //   return result;
-  // }
 }

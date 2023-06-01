@@ -3,13 +3,13 @@ import 'package:flutter_mvvm_template/core/enums/view_state.dart';
 import 'package:flutter_mvvm_template/core/models/body/login_body.dart';
 import 'package:flutter_mvvm_template/core/models/responses/auth_response.dart';
 import 'package:flutter_mvvm_template/core/others/base_view_model.dart';
-import 'package:flutter_mvvm_template/core/services/auth_service.dart';
+import 'package:flutter_mvvm_template/core/services/firebase_auth_service.dart';
 import 'package:logger/logger.dart';
 
 class LoginViewModel extends BaseViewModel {
   final log = Logger();
   bool isRememberMe = false;
-  AuthService authService = AuthService();
+  FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   LoginBody loginBody = LoginBody();
   late AuthResponse response;
 
@@ -27,7 +27,7 @@ class LoginViewModel extends BaseViewModel {
   requestLogin() async {
     setState(ViewState.busy);
     try {
-      response = await authService.loginWithEmailAndPassword(loginBody);
+      response = await firebaseAuthService.loginWithEmailAndPassword(loginBody);
     } catch (e, s) {
       log.d("@LoginViewModel requestLogin Exceptions : $e");
       log.d(s);
