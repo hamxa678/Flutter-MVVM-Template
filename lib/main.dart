@@ -1,25 +1,33 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_template/app.dart';
+import 'package:flutter_mvvm_template/core/others/logger_customizations/custom_logger.dart';
+import 'package:flutter_mvvm_template/locator.dart';
+import 'core/enums/env.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  final log = CustomLogger(className: 'main');
+  try {
+    log.i('Testing info logs');
+    log.d('Testing debug logs');
+    log.e('Testing error logs');
+    log.wtf('Testing WTF logs');
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+    );
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    await setupLocator(Env.production);
+    runApp(const MyApp(title: 'App Name'));
+  } catch (e) {
+    log.e("$e");
+  }
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        useMaterial3: true,
-
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  final log = CustomLogger(className: 'main');
+  await Firebase.initializeApp();
+  log.d("Handling a background message: ${message.messageId}");
 }
 
 class MyHomePage extends StatefulWidget {
