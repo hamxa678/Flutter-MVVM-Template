@@ -5,17 +5,13 @@ class LocalStorageService {
   final log = CustomLogger(className: 'Local Storage Service');
   static SharedPreferences? _preferences;
 
-  ///
   /// List of const keys
-  ///
   static const String onboardingCountKey = 'onBoardingCount';
   static const String notificationsCountKey = 'notificationsCount';
   static const String accessTokenKey = 'accessToken';
   static const String refreshTokenKey = 'refreshToken';
 
-  ///
   /// Setters and getters
-  ///
   int get onBoardingPageCount => _getFromDisk(onboardingCountKey) ?? 0;
   set onBoardingPageCount(int count) => _saveToDisk(onboardingCountKey, count);
 
@@ -28,9 +24,7 @@ class LocalStorageService {
 
   dynamic get refreshToken => _getFromDisk(refreshTokenKey);
 
-  ///
   ///initializing instance
-  ///
   init() async {
     _preferences = await SharedPreferences.getInstance();
   }
