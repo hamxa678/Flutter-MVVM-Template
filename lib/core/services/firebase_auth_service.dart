@@ -5,20 +5,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:flutter_mvvm_template/UI/custom_widget/dialogbox/auth_dialog.dart';
 import 'package:flutter_mvvm_template/core/models/body/login_body.dart';
 import 'package:flutter_mvvm_template/core/models/body/reset_password_body.dart';
 import 'package:flutter_mvvm_template/core/models/body/signup_body.dart';
 import 'package:flutter_mvvm_template/core/models/other_models/user_profile.dart';
-import 'package:flutter_mvvm_template/core/models/responses/auth_response.dart';
-import 'package:flutter_mvvm_template/core/models/responses/user_profile_response.dart';
 import 'package:flutter_mvvm_template/core/others/logger_customizations/custom_logger.dart';
 import 'package:flutter_mvvm_template/core/services/firebase_service.dart';
-import 'package:flutter_mvvm_template/core/services/device_info_service.dart';
 import 'package:flutter_mvvm_template/core/services/local_storage_service.dart';
-import 'package:flutter_mvvm_template/core/services/notifications_service.dart';
 import 'package:flutter_mvvm_template/locator.dart';
-import 'package:get/get.dart';
 import 'package:github_sign_in/github_sign_in.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
@@ -75,9 +69,10 @@ class FirebaseAuthService {
     }
   }
 
+  /// [_getUserProfile] method is used for getting user profile data.
   _getUserProfile() async {
-    // UserProfileResponse response = await _dbService.getUserProfile();
-    // if (response.success) {
+    userProfile = await _firebaseService.getUserProfile();
+    // if (UserProfile.success) {
     //   userProfile = response.profile;
     //   log.d('Got User Data: ${userProfile?.toJson()}');
     // } else {

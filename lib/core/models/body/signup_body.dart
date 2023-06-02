@@ -9,9 +9,7 @@ class SignUpBody {
   String? gender;
   String? phone;
   File? image;
-  // String? fcmToken;
-
-  /// Other fields to be added as well.
+  String? dob;
 
   SignUpBody({
     this.email,
@@ -21,7 +19,7 @@ class SignUpBody {
     this.name,
     this.phone,
     this.image,
-    // this.fcmToken,
+    this.dob,
   });
 
   toJson() async {
@@ -34,7 +32,7 @@ class SignUpBody {
       'phone': phone,
       'image':
           image != null ? await dio.MultipartFile.fromFile(image!.path) : null,
-      // 'fcm_token': this.fcmToken,
+      'dob': dob,
     };
   }
 }

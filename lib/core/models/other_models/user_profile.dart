@@ -1,47 +1,52 @@
 import 'package:dio/dio.dart' as dio;
 
 class UserProfile {
-  String? name;
-  String? email;
-  String? fcmToken;
-  String? emailVerifiedAt;
-  String? phone;
-  String? imageUrl;
-  String? gender;
-  String? location;
-  String? mobile;
+  String? name; // done
+  String? email; // done
+  String? fcmToken; // done
+  String? phone; // done
+  String? imageUrl; // done
+  String? gender; // done
+  String? location; // done
   String? dob;
 
   UserProfile({
     this.name,
     this.email,
     this.fcmToken,
-    this.emailVerifiedAt,
     this.phone,
     this.imageUrl,
     this.gender,
     this.location,
-    this.mobile,
     this.dob,
   });
 
-  UserProfile.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    email = json['email'];
-    fcmToken = json['fcm_token'];
-    emailVerifiedAt = json['email_verified_at'];
-    phone = json['phone'];
-    imageUrl = json['image_url'];
-    gender = json['gender'];
-    location = json['location'];
-    dob = json['dob'];
+  factory UserProfile.fromMap(map) {
+    return UserProfile(
+      name : map['name'],
+      email : map['email'],
+      fcmToken : map['fcm_token'],
+      phone : map['phone'],
+      imageUrl : map['image_url'],
+      gender : map['gender'],
+      location : map['location'],
+      dob : map['dob'],
+    );
+  }
+  Map<String, dynamic> toMap() {
+    return {
+      'name' : name,
+    'email' : email,
+  'phone' : phone,
+    'gender' : gender,
+    'location' : location
+    };
   }
 
   Future<Map<String, dynamic>> toJson() async {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['email'] = email;
-    // data['fcmToken'] = this.fcmToken;
     data['phone'] = phone;
     data['image'] =
         imageUrl != null ? await dio.MultipartFile.fromFile(imageUrl!) : null;
