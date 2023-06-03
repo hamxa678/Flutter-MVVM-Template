@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_template/app.dart';
 import 'package:flutter_mvvm_template/core/enums/env.dart';
@@ -37,7 +38,7 @@ Future<void> main() async {
     log.d("$s");
   }
 }
- /// This is a background message handler function which handles messages when the app is in background
+ /// This is a background message handler function which handles messages when the app is in background // 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final log = CustomLogger(className: 'main');
   await Firebase.initializeApp();
