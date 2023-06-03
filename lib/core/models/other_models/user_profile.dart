@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart' as dio;
 
 class UserProfile {
-  String? name; // done
-  String? email; // done
-  String? fcmToken; // done
-  String? phone; // done
-  String? imageUrl; // done
-  String? gender; // done
-  String? location; // done
+  String? name;
+  String? email;
+  String? fcmToken;
+  String? phone; 
+  String? imageUrl; 
+  String? gender; 
+  String? location; 
   String? dob;
-
+  
   UserProfile({
     this.name,
     this.email,

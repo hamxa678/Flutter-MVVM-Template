@@ -18,18 +18,18 @@ class SignUpViewModel extends BaseViewModel {
   int? selectedGenderIndex;
   SignUpBody signUpBody = SignUpBody();
   late AuthResponse response;
+  final formKey = GlobalKey<FormState>();
 
   TextEditingController userNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController locationController = TextEditingController();
 
-  bool passwordVisibility = true;
+  bool isPasswordVisible = false;
 
   togglePasswordVisibility() {
-    setState(ViewState.busy);
-    passwordVisibility = !passwordVisibility;
-    setState(ViewState.idle);
+    isPasswordVisible = !isPasswordVisible;
+    notifyListeners();
   }
 
   updateIndex(val) {

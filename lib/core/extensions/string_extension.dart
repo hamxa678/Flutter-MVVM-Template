@@ -6,14 +6,17 @@ extension StringValidator on String {
   }
 
   bool isValidUserName() {
-    return true;
+    return RegExp(r"^[A-Z][a-zA-Z]+ [A-Z][a-zA-Z]+$").hasMatch(this);
   }
 
   bool isValidPassword() {
-    return true;
+    return RegExp(
+            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+        .hasMatch(this);
   }
 
   bool isValidPhone() {
-    return true;
+    return RegExp(r'^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$')
+        .hasMatch(this);
   }
 }
