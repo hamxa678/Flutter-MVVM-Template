@@ -8,7 +8,7 @@ class LocalStorageService {
   /// List of const keys
   static const String onboardingCountKey = 'onBoardingCount';
   static const String notificationsCountKey = 'notificationsCount';
-  static const String accessTokenKey = 'accessToken';
+  static const String isLoginFlag = 'accessToken';
   static const String refreshTokenKey = 'refreshToken';
 
   /// Setters and getters
@@ -19,8 +19,8 @@ class LocalStorageService {
   set setNotificationsCount(int count) =>
       _saveToDisk(notificationsCountKey, count);
 
-  dynamic get accessToken => _getFromDisk(accessTokenKey);
-  set accessToken(token) => _saveToDisk(accessTokenKey, token);
+  dynamic get isLogin => _getFromDisk(isLoginFlag);
+  set isLogin(token) => _saveToDisk(isLoginFlag, token);
 
   dynamic get refreshToken => _getFromDisk(refreshTokenKey);
 

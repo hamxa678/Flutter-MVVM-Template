@@ -27,8 +27,6 @@ class FirebaseService {
     return userProfile;
   }
 
-  
-
   Future<Onboarding?> getOnboardingData() async {
     await documentReferenceForOnBoarding.get().then((value) {
       onboarding = Onboarding.fromMap(value.data());

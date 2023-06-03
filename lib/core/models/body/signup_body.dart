@@ -22,7 +22,7 @@ class SignUpBody {
     this.dob,
   });
 
-  toJson() async {
+  Future<Map<String, dynamic>> toMap() async {
     return {
       'email': email,
       'password': password,

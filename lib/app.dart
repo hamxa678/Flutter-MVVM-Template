@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
   const MyApp({required this.title, Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
     /// Initialize the screen util, this will make your UI responsive.
     return ScreenUtilInit(
+    
       designSize: const Size(_designWidth, _designHeight),
       builder: (context, widget) => GetMaterialApp(
         translations: LocalizationService(),

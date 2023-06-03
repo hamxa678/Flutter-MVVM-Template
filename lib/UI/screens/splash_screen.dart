@@ -4,11 +4,15 @@ import 'package:flutter_mvvm_template/UI/custom_widget/dialogbox/network_error_d
 import 'package:flutter_mvvm_template/UI/screens/auth_signup/login/login_screen.dart';
 import 'package:flutter_mvvm_template/UI/screens/onboarding/onboarding_screen.dart';
 import 'package:flutter_mvvm_template/UI/screens/root/root_screen.dart';
+import 'package:flutter_mvvm_template/core/constants/colors.dart';
+import 'package:flutter_mvvm_template/core/constants/strings.dart';
 import 'package:flutter_mvvm_template/core/models/other_models/onboarding.dart';
 import 'package:flutter_mvvm_template/core/others/logger_customizations/custom_logger.dart';
 import 'package:flutter_mvvm_template/core/services/firebase_auth_service.dart';
 import 'package:flutter_mvvm_template/core/services/local_storage_service.dart';
 import 'package:flutter_mvvm_template/core/services/notifications_service.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -52,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
     ///initializing notification services
     ///
 
-    await _notificationService.initConfigure();
+    // await _notificationService.initConfigure();
 
     ///
     /// Use the below [_getOnboardingData] method if the
@@ -117,11 +121,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ///
     /// Splash Screen UI goes here.
-    ///
-    return const Scaffold(
-      body: Center(child: Text('Splash Screen')),
+    return Scaffold(
+      backgroundColor: scaffoldBackgroundColor,
+      body: Center(
+          child: Image.asset(
+        '${staticImage}logo.png',
+        height: 100.h,
+        width: 100.w,
+        fit: BoxFit.scaleDown,
+      )),
     );
   }
 }

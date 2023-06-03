@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
+  firebase_core
   flutter_secure_storage_windows
   geolocator_windows
   modal_progress_hud_nsn

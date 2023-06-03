@@ -59,7 +59,7 @@ class FirebaseAuthService {
   ///       b) Updates the user FCM Token
   ///
   doSetup() async {
-    isLogin = _localStorageService.accessToken != null;
+    isLogin = _localStorageService.isLogin != null;
     if (isLogin) {
       log.d('User is already logged-in');
       await _getUserProfile();
@@ -97,10 +97,14 @@ class FirebaseAuthService {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(
-            email: signUpBody.email!,
-            password: signUpBody.password!,
-          )
-          .whenComplete(() => addUserDetail(signUpBody));
+        email: signUpBody.email!,
+        password: signUpBody.password!,
+      )
+          .whenComplete(() async {
+        await addUserDetail(signUpBody);
+        userProfile = UserProfile.fromMap(signUpBody.toMap());
+        _localStorageService.isLogin = true;
+      });
       log.i("@signupWithEmailAndPassword :: $userCredential");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -115,7 +119,7 @@ class FirebaseAuthService {
     // response = await _dbService.createAccount(body);
     // if (response.success) {
     //   userProfile = UserProfile.fromJson(body.toJson());
-    //   _localStorageService.accessToken = response.accessToken;
+    // _localStorageService.accessToken = response.accessToken;
     //   await _updateFcmToken();
     // }
     // return response;
@@ -190,7 +194,7 @@ class FirebaseAuthService {
 
   /// [addUserDetail] method is used for adding user details in firestore during signup.
   addUserDetail(SignUpBody signUpBody) async {
-    await documentReference.set(signUpBody.toJson());
+    await documentReference.set(signUpBody.toMap());
   }
 
   /// [deleteUserDetail] method is used for deleting user details in firestore.
@@ -236,7 +240,7 @@ class FirebaseAuthService {
 
   logout() async {
     await _auth.signOut();
-    _localStorageService.accessToken = null;
+    _localStorageService.isLogin = null;
   }
 
   /// Generates a cryptographically secure random nonce, to be included in a
