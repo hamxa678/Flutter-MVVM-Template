@@ -13,11 +13,14 @@ import 'package:flutter_mvvm_template/core/others/logger_customizations/custom_l
 import 'package:flutter_mvvm_template/core/services/firebase_service.dart';
 import 'package:flutter_mvvm_template/core/services/local_storage_service.dart';
 import 'package:flutter_mvvm_template/locator.dart';
+import 'package:get/get.dart';
 import 'package:github_sign_in/github_sign_in.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+
+import '../../UI/custom_widget/dialogbox/auth_dialog.dart';
 
 ///
 /// [FirebaseAuthService] class contains all authentication related logic with following
@@ -72,17 +75,9 @@ class FirebaseAuthService {
   /// [_getUserProfile] method is used for getting user profile data.
   _getUserProfile() async {
     userProfile = await _firebaseService.getUserProfile();
-    // if (UserProfile.success) {
-    //   userProfile = response.profile;
-    //   log.d('Got User Data: ${userProfile?.toJson()}');
-    // } else {
-    //   Get.dialog(AuthDialog(title: 'Title', message: response.error!));
-    // }
   }
 
-  ///
-  /// Updating FCM Token here...
-  ///
+  /// Updating FCM Token here
   _updateFcmToken() async {
     // final fcmToken = await locator<NotificationsService>().getFcmToken();
     // final deviceId = await DeviceInfoService().getDeviceId();
@@ -90,6 +85,35 @@ class FirebaseAuthService {
     // if (response.success) {
     //   userProfile!.fcmToken = fcmToken;
     // }
+  }
+
+  /// [loginWithEmailAndPassword] method is used for login with email and password.
+  loginWithEmailAndPassword(LoginBody loginBody) async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: loginBody.email!, password: loginBody.password!);
+      log.i("@loginWithEmailAndPassword :: $userCredential");
+      _localStorageService.isLogin = true;
+      userProfile = await _getUserProfile();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        Get.dialog(const AuthDialog(
+            title: 'Invaid Login', message: 'No user found for that email.'));
+      } else if (e.code == 'wrong-password') {
+        Get.dialog(const AuthDialog(
+            title: 'Invaid Login',
+            message: 'Wrong password provided for that user.'));
+      }
+    }
+
+    // late AuthResponse response;
+    // response = await _dbService.loginWithEmailAndPassword(body);
+    // if (response.success) {
+    //   _localStorageService.accessToken = response.accessToken;
+    //   await _getUserProfile();
+    //   _updateFcmToken();
+    // }
+    // return response;
   }
 
   /// [signupWithEmailAndPassword] method is used for signup with email and password.
@@ -200,31 +224,6 @@ class FirebaseAuthService {
   /// [deleteUserDetail] method is used for deleting user details in firestore.
   deleteUserDetail() async {
     await documentReference.delete();
-  }
-
-  /// [loginWithEmailAndPassword] method is used for login with email and password.
-  loginWithEmailAndPassword(LoginBody loginBody) async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: loginBody.email!, password: loginBody.password!);
-      log.i("@loginWithEmailAndPassword :: $userCredential");
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        log.i('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        log.i('Wrong password provided for that user.');
-      }
-    }
-
-    // late AuthResponse response;
-    // response = await _dbService.loginWithEmailAndPassword(body);
-    // if (response.success) {
-    //   _localStorageService.accessToken = response.accessToken;
-    //   await _getUserProfile();
-    //   _updateFcmToken();
-    // }
-    // return response;
   }
 
   /// [resetPassword] method is used for reset password.

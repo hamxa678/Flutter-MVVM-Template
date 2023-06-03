@@ -4,40 +4,31 @@ import 'package:flutter_mvvm_template/core/models/body/login_body.dart';
 import 'package:flutter_mvvm_template/core/models/responses/auth_response.dart';
 import 'package:flutter_mvvm_template/core/others/base_view_model.dart';
 import 'package:flutter_mvvm_template/core/services/firebase_auth_service.dart';
+import 'package:flutter_mvvm_template/locator.dart';
 import 'package:logger/logger.dart';
 
 class LoginViewModel extends BaseViewModel {
   final log = Logger();
-  bool isRememberMe = false;
-  FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  FirebaseAuthService firebaseAuthService = locator<FirebaseAuthService>();
   LoginBody loginBody = LoginBody();
-  late AuthResponse response;
+  final formKey = GlobalKey<FormState>();
+  bool isPasswordVisible = false;
 
+  /// skillsAndProjectsController screen textfield controller
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  bool passwordVisibility = true;
-
+  ///  for toggling password visibility
   togglePasswordVisibility() {
-    setState(ViewState.busy);
-    passwordVisibility = !passwordVisibility;
-    setState(ViewState.idle);
-  }
-
-  requestLogin() async {
-    setState(ViewState.busy);
-    try {
-      response = await firebaseAuthService.loginWithEmailAndPassword(loginBody);
-    } catch (e, s) {
-      log.d("@LoginViewModel requestLogin Exceptions : $e");
-      log.d(s);
-    }
-    setState(ViewState.idle);
-  }
-
-  toggleIsRememberMe() {
-    debugPrint('@toggleIsRememberMe: isRememberMe: $isRememberMe');
-    isRememberMe = !isRememberMe;
+    isPasswordVisible = !isPasswordVisible;
     notifyListeners();
+  }
+
+  login() async {
+    setState(ViewState.busy);
+    loginBody.email = emailController.text;
+    loginBody.password = passwordController.text;
+    await firebaseAuthService.loginWithEmailAndPassword(loginBody);
+    setState(ViewState.idle);
   }
 }
