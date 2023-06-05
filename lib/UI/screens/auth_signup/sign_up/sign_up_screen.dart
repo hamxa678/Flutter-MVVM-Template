@@ -6,9 +6,7 @@ import 'package:flutter_mvvm_template/core/constants/strings.dart';
 import 'package:flutter_mvvm_template/core/enums/view_state.dart';
 import 'package:flutter_mvvm_template/core/extensions/string_extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
-import 'package:get/get.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
