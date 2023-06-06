@@ -31,4 +31,10 @@ class LoginViewModel extends BaseViewModel {
     await firebaseAuthService.loginWithEmailAndPassword(loginBody);
     setState(ViewState.idle);
   }
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 }

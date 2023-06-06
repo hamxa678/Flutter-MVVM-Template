@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_template/UI/custom_widget/custom_button.dart';
 import 'package:flutter_mvvm_template/UI/custom_widget/custom_textfield.dart';
 import 'package:flutter_mvvm_template/UI/screens/auth_signup/login/login_view_model.dart';
+import 'package:flutter_mvvm_template/UI/screens/auth_signup/sign_up/sign_up_screen.dart';
 import 'package:flutter_mvvm_template/core/constants/strings.dart';
 import 'package:flutter_mvvm_template/core/enums/view_state.dart';
 import 'package:flutter_mvvm_template/core/extensions/string_extension.dart';
+import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -116,7 +118,7 @@ class LoginScreen extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              // Get.to(() => const SignupScreen());
+              Get.to(() => const SignUpScreen());
             },
             child: const Text(
               'Signup',

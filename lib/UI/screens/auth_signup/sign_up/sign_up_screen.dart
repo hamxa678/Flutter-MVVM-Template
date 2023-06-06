@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_template/UI/custom_widget/custom_button.dart';
 import 'package:flutter_mvvm_template/UI/custom_widget/custom_textfield.dart';
+import 'package:flutter_mvvm_template/UI/screens/auth_signup/login/login_screen.dart';
 import 'package:flutter_mvvm_template/UI/screens/auth_signup/sign_up/sign_up_view_model.dart';
 import 'package:flutter_mvvm_template/core/constants/strings.dart';
 import 'package:flutter_mvvm_template/core/enums/view_state.dart';
 import 'package:flutter_mvvm_template/core/extensions/string_extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatelessWidget {
-  SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -34,7 +37,7 @@ class SignUpScreen extends StatelessWidget {
                       fit: BoxFit.scaleDown,
                     ),
                     SizedBox(height: 50.h),
-                    Text('Login',
+                    Text('Sign Up',
                         style: TextStyle(
                             fontSize: 35.sp, color: const Color(0xff2441A3))),
                     SizedBox(height: 30.h),
@@ -62,24 +65,66 @@ class SignUpScreen extends StatelessWidget {
                       controller: model.passwordController,
                     ),
                     SizedBox(height: 20.h),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: InkWell(
-                        onTap: () {
-                          // Get.to(ForgetPassword());
-                        },
-                        child: const Text(
-                          'Forget password?',
-                          style: TextStyle(color: Color(0xff2441A3)),
-                        ),
-                      ),
+                    CustomTextField(
+                      validator: (input) =>
+                          input!.isValidPassword() ? null : "Invalid Name",
+                      obscureText: !model.isPasswordVisible,
+                      hintText: 'Name',
+                      controller: model.nameController,
                     ),
                     SizedBox(height: 20.h),
+
+                    CustomTextField(
+                      validator: (input) {
+                        if (input!.isEmpty) {
+                          return "Please enter your location";
+                        }
+                        return null;
+                      },
+                      hintText: 'Location',
+                      controller: model.nameController,
+                    ),
+                    SizedBox(height: 20.h),
+                    _customDropDown(model),
+
+                    SizedBox(height: 20.h),
+                    CustomTextField(
+                      validator: (input) =>
+                          input!.isValidPhone() ? null : "Invalid Phone Number",
+                      hintText: 'Phone Number',
+                      controller: model.phoneNoController,
+                    ),
+                    SizedBox(height: 20.h),
+                    CustomTextField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter your DOB";
+                        } else if (value ==
+                            DateFormat('dd-MM-yyyy').format(DateTime.now())) {
+                          return "Please enter valid DOB";
+                        }
+                        return null;
+                      },
+                      readOnly: true,
+                      onTap: () {
+                        model.selectDop(context);
+                      },
+                      keyboardtype: TextInputType.datetime,
+
+                      //validator: model.inputValidation.validateEmail,
+                      onSaved: (dob) {
+                        //model.loginBody.email = email;
+                      },
+                      controller: model.dobController,
+                      hintText: "DOB (i.e. DD/MM/YYYY)",
+                    ),
+                    SizedBox(height: 30.h),
+
                     // 55.verticalSpace,
                     CustomButton(
                       titleWidget: !(model.state == ViewState.busy)
                           ? Text(
-                              'Log in',
+                              'Sign Up',
                               style: TextStyle(
                                   fontSize: 20.sp, color: Colors.white),
                             )
@@ -92,12 +137,66 @@ class SignUpScreen extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 20.h),
-                    // _dontHaveAccount()
+                    _alreadyHaveAccount()
                   ],
                 ),
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  _alreadyHaveAccount() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text(
+            'Already have account? ',
+          ),
+          InkWell(
+            onTap: () {
+              Get.to(() => const LoginScreen());
+            },
+            child: const Text(
+              'Login',
+              style: TextStyle(color: Color(0xff2441A3)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container _customDropDown(SignUpViewModel model) {
+    return Container(
+      height: 50.h,
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(60.r),
+          border: Border.all(color: const Color(0xff707070))),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: model.gender,
+          elevation: 16,
+          style: TextStyle(
+            fontSize: 15.sp,
+            color: const Color(0xff0D0F23),
+          ),
+          onChanged: (String? value) {
+            model.toggleDropDownValue(value!);
+          },
+          items: model.list.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
         ),
       ),
     );
