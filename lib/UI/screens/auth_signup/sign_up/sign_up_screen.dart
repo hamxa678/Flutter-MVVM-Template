@@ -22,7 +22,7 @@ class SignUpScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(25.w, 65.h, 25.w, 0),
+              padding: EdgeInsets.fromLTRB(25.w, 65.h, 25.w, 25.h),
               child: Form(
                 key: model.formKey,
                 child: Column(
@@ -67,8 +67,7 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(height: 20.h),
                     CustomTextField(
                       validator: (input) =>
-                          input!.isValidPassword() ? null : "Invalid Name",
-                      obscureText: !model.isPasswordVisible,
+                          input!.isValidUserName() ? null : "Invalid Name",
                       hintText: 'Name',
                       controller: model.nameController,
                     ),
@@ -82,7 +81,7 @@ class SignUpScreen extends StatelessWidget {
                         return null;
                       },
                       hintText: 'Location',
-                      controller: model.nameController,
+                      controller: model.locationController,
                     ),
                     SizedBox(height: 20.h),
                     _customDropDown(model),
@@ -133,6 +132,7 @@ class SignUpScreen extends StatelessWidget {
                       onPressed: () async {
                         if (model.formKey.currentState!.validate()) {
                           // await model.login();
+                          await model.signUp();
                         }
                       },
                     ),
