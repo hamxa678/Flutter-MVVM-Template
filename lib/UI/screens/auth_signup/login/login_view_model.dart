@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mvvm_template/core/enums/view_state.dart';
 import 'package:flutter_mvvm_template/core/models/body/login_body.dart';
-import 'package:flutter_mvvm_template/core/models/responses/auth_response.dart';
 import 'package:flutter_mvvm_template/core/others/base_view_model.dart';
 import 'package:flutter_mvvm_template/core/services/firebase_auth_service.dart';
 import 'package:flutter_mvvm_template/locator.dart';

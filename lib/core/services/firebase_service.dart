@@ -5,7 +5,6 @@ import 'package:flutter_mvvm_template/core/models/body/reset_password_body.dart'
 import 'package:flutter_mvvm_template/core/models/body/signup_body.dart';
 import 'package:flutter_mvvm_template/core/models/other_models/onboarding.dart';
 import 'package:flutter_mvvm_template/core/models/other_models/user_profile.dart';
-import 'package:flutter_mvvm_template/core/models/responses/auth_response.dart';
 import 'package:flutter_mvvm_template/core/models/responses/base_responses/base_response.dart';
 
 class FirebaseService {
@@ -27,12 +26,12 @@ class FirebaseService {
     return userProfile;
   }
 
-  Future<Onboarding?> getOnboardingData() async {
-    await documentReferenceForOnBoarding.get().then((value) {
-      onboarding = Onboarding.fromMap(value.data());
-    });
-    return onboarding;
-  }
+  // Future<Onboarding?> getOnboardingData() async {
+  //   await documentReferenceForOnBoarding.get().then((value) {
+  //     onboarding = Onboarding.fromMap(value.data());
+  //   });
+  //   return onboarding;
+  // }
 
   Future<BaseResponse?> updateFcmToken(String deviceId, String token) async {
     return null;
@@ -42,15 +41,18 @@ class FirebaseService {
     return null;
   }
 
-  Future<AuthResponse?> loginWithEmailAndPassword(LoginBody body) async {
+  // Future<AuthResponse?>
+   loginWithEmailAndPassword(LoginBody body) async {
     return null;
   }
 
-  Future<AuthResponse?> createAccount(SignUpBody body) async {
+  // Future<AuthResponse?> 
+  createAccount(SignUpBody body) async {
     return null;
   }
 
-  Future<AuthResponse?> resetPassword(ResetPasswordBody body) async {
+  // Future<AuthResponse?> 
+  resetPassword(ResetPasswordBody body) async {
     return null;
   }
 }

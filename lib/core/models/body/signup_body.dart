@@ -22,7 +22,7 @@ class SignUpBody {
     this.dob,
   });
 
-  Future<Map<String, dynamic>> toMap() async {
+  Map<String, dynamic> toMap() {
     return {
       'email': email,
       'password': password,
@@ -30,8 +30,8 @@ class SignUpBody {
       'location': location,
       'gender': gender,
       'phone': phone,
-      'image':
-          image != null ? await dio.MultipartFile.fromFile(image!.path) : null,
+      // 'image':
+      //     image != null ? await dio.MultipartFile.fromFile(image!.path) : null,
       'dob': dob,
     };
   }

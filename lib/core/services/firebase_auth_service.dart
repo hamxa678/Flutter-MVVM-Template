@@ -117,7 +117,7 @@ class FirebaseAuthService {
   }
 
   /// [signupWithEmailAndPassword] method is used for signup with email and password.
-  signupWithEmailAndPassword(SignUpBody signUpBody) async {
+  Future<bool> signupWithEmailAndPassword(SignUpBody signUpBody) async {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(
@@ -125,11 +125,14 @@ class FirebaseAuthService {
         password: signUpBody.password!,
       )
           .whenComplete(() async {
+        print('Auth completed');
         await addUserDetail(signUpBody);
+        print('Auth completed 22');
         userProfile = UserProfile.fromMap(signUpBody.toMap());
         _localStorageService.isLogin = true;
       });
       log.i("@signupWithEmailAndPassword :: $userCredential");
+      return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         log.i('The password provided is too weak.');
@@ -139,6 +142,7 @@ class FirebaseAuthService {
     } catch (e) {
       log.e(e);
     }
+    return false;
     // late AuthResponse response;
     // response = await _dbService.createAccount(body);
     // if (response.success) {
@@ -212,8 +216,9 @@ class FirebaseAuthService {
 
   /// [deleteAccount] method is used for deleting user account and [deleteUserDetail] will delete the data of respected user..
   deleteAccount() async {
-    await currentUser!.delete();
-    deleteUserDetail();
+    await currentUser!.delete().whenComplete(() {
+      deleteUserDetail();
+    });
   }
 
   /// [addUserDetail] method is used for adding user details in firestore during signup.
@@ -221,7 +226,7 @@ class FirebaseAuthService {
     await documentReference.set(signUpBody.toMap());
   }
 
-  /// [deleteUserDetail] method is used for deleting user details in firestore.
+  /// This method is used for deleting user details in firestore.
   deleteUserDetail() async {
     await documentReference.delete();
   }
