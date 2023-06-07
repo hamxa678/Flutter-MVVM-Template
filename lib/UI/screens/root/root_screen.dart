@@ -10,8 +10,9 @@ class RootScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => RootScreenViewModel(),
-      child: Consumer<RootScreenViewModel>(
-        builder: (context, model, child) => WillPopScope(
+      child: Consumer<RootScreenViewModel>(builder: (context, model, child) {
+gi
+        return WillPopScope(
           onWillPop: () async {
             final status = await Get.dialog(AlertDialog(
               title: const Text('Caution!'),
@@ -36,32 +37,36 @@ class RootScreen extends StatelessWidget {
             return status;
           },
           child: Scaffold(
-            extendBody: true,
-            // body:
-            // model.allScreen[model.selectedScreen],
-            // bottomNavigationBar: model.isEnableBottomBar
-            //     ? FABBottomAppBar(
-            //         color: Colors.grey,
-            //         backgroundColor: Colors.grey,
-            //         selectedColor: primaryColor,
-            //         notchedShape: const CircularNotchedRectangle(),
-            //         onTabSelected: model.updatedScreenIndex,
-            //         items: [],
-            //       )
-            //     : Container(),
-            // floatingActionButtonLocation:
-            //     FloatingActionButtonLocation.centerDocked,
-            // floatingActionButton: model.isEnableBottomBar
-            //     ? FloatingActionButton(
-            //         backgroundColor: otherColor,
-            //         onPressed: () {},
-            //         child: const Icon(Icons.add),
-            //         elevation: 2.0,
-            //       )
-            //     : Container(),
-          ),
-        ),
-      ),
+              extendBody: true,
+              body: Center(
+                  child: Text(
+                model.count.toString(),
+                style: TextStyle(fontSize: 30),
+              ))),
+          // body:
+          // model.allScreen[model.selectedScreen],
+          // bottomNavigationBar: model.isEnableBottomBar
+          //     ? FABBottomAppBar(
+          //         color: Colors.grey,
+          //         backgroundColor: Colors.grey,
+          //         selectedColor: primaryColor,
+          //         notchedShape: const CircularNotchedRectangle(),
+          //         onTabSelected: model.updatedScreenIndex,
+          //         items: [],
+          //       )
+          //     : Container(),
+          // floatingActionButtonLocation:
+          //     FloatingActionButtonLocation.centerDocked,
+          // floatingActionButton: model.isEnableBottomBar
+          //     ? FloatingActionButton(
+          //         backgroundColor: otherColor,
+          //         onPressed: () {},
+          //         child: const Icon(Icons.add),
+          //         elevation: 2.0,
+          //       )
+          //     : Container(),
+        );
+      }),
     );
   }
 }
