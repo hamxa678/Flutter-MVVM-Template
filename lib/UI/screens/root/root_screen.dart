@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_template/UI/screens/cart_screeb/cart_screen.dart';
+import 'package:flutter_mvvm_template/UI/screens/cart_screeb/cart_screen_view_model.dart';
 import 'package:flutter_mvvm_template/UI/screens/root/root_screen_view_model.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -8,10 +11,12 @@ class RootScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
+    return ChangeNotifierProxyProvider<CartScreenViewModel,
+        RootScreenViewModel>(
       create: (context) => RootScreenViewModel(),
+      update: (_, cartScreenViewModel, rootScreenViewModel) =>
+          rootScreenViewModel!..update(cartScreenViewModel),
       child: Consumer<RootScreenViewModel>(builder: (context, model, child) {
-gi
         return WillPopScope(
           onWillPop: () async {
             final status = await Get.dialog(AlertDialog(
@@ -38,11 +43,37 @@ gi
           },
           child: Scaffold(
               extendBody: true,
+              floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    context.read<CartScreenViewModel>().add();
+                    // model.add();
+                  },
+                  child: const Icon(Icons.exposure_plus_1)),
               body: Center(
-                  child: Text(
-                model.count.toString(),
-                style: TextStyle(fontSize: 30),
-              ))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    (model.cartmodel.todosCount == 0)
+                        ? const Text(
+                            'No more todos',
+                            style: TextStyle(color: Colors.red),
+                          )
+                        : Text(
+                            //model.cartmodel.todos.length
+
+                            'Number of todos are ${context.read<CartScreenViewModel>().todosCount}',
+                            style: const TextStyle(color: Colors.green),
+                          ),
+                    20.verticalSpace,
+                    ElevatedButton(
+                      child: const Text('Get todos'),
+                      onPressed: () {
+                        Get.to(const CartScreen());
+                      },
+                    ),
+                  ],
+                ),
+              )),
           // body:
           // model.allScreen[model.selectedScreen],
           // bottomNavigationBar: model.isEnableBottomBar

@@ -95,6 +95,7 @@ class FirebaseAuthService {
       log.i("@loginWithEmailAndPassword :: $userCredential");
       _localStorageService.isLogin = true;
       userProfile = await _getUserProfile();
+      
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Get.dialog(const AuthDialog(

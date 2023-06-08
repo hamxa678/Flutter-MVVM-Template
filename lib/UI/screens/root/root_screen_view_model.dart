@@ -4,14 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_template/core/enums/view_state.dart';
 import 'package:flutter_mvvm_template/core/others/base_view_model.dart';
 
-class RootScreenViewModel extends BaseViewModel {
-  int count = 1;
+import '../cart_screeb/cart_screen_view_model.dart';
 
+class RootScreenViewModel extends BaseViewModel {
+  late CartScreenViewModel cartmodel;
   RootScreenViewModel() {
     // Timer.periodic(const Duration(milliseconds: 100), (timer) {
     //   // print(timer);
     //   setCounter();
     // });
+  }
+
+  add() {
+    cartmodel.todosCount++;
+    notifyListeners();
+  }
+
+  void update(CartScreenViewModel myModel) {
+    cartmodel = myModel;
+    notifyListeners();
   }
 
   List<Widget> allScreen = [
@@ -21,12 +32,6 @@ class RootScreenViewModel extends BaseViewModel {
     // ProfileScreen()
   ];
   int selectedScreen = 0;
-
-  setCounter() {
-    count++;
-
-    notifyListeners();
-  }
 
   bool isEnableBottomBar = true;
 
