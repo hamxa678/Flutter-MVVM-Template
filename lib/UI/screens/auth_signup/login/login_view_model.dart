@@ -1,9 +1,11 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_mvvm_template/UI/screens/root/root_screen.dart';
 import 'package:flutter_mvvm_template/core/enums/view_state.dart';
 import 'package:flutter_mvvm_template/core/models/body/login_body.dart';
 import 'package:flutter_mvvm_template/core/others/base_view_model.dart';
 import 'package:flutter_mvvm_template/core/services/firebase_auth_service.dart';
 import 'package:flutter_mvvm_template/locator.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 class LoginViewModel extends BaseViewModel {
@@ -27,9 +29,14 @@ class LoginViewModel extends BaseViewModel {
     setState(ViewState.busy);
     loginBody.email = emailController.text;
     loginBody.password = passwordController.text;
-    await firebaseAuthService.loginWithEmailAndPassword(loginBody);
+    bool successLogin =
+        await firebaseAuthService.loginWithEmailAndPassword(loginBody);
+    (successLogin)
+        ? Get.offAll(const RootScreen())
+        : Get.snackbar("Error", "Login Error");
     setState(ViewState.idle);
   }
+
   @override
   void dispose() {
     emailController.dispose();

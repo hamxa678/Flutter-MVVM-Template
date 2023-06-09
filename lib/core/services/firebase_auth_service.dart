@@ -88,24 +88,23 @@ class FirebaseAuthService {
   }
 
   /// [loginWithEmailAndPassword] method is used for login with email and password.
-  loginWithEmailAndPassword(LoginBody loginBody) async {
+  Future<bool> loginWithEmailAndPassword(LoginBody loginBody) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: loginBody.email!, password: loginBody.password!);
       log.i("@loginWithEmailAndPassword :: $userCredential");
+      isLogin = true;
       _localStorageService.isLogin = true;
-      userProfile = await _getUserProfile();
-      
+      await _getUserProfile();
+      return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        Get.dialog(const AuthDialog(
-            title: 'Invaid Login', message: 'No user found for that email.'));
+        Get.snackbar("Invaid Login", "No user found for that email.");
       } else if (e.code == 'wrong-password') {
-        Get.dialog(const AuthDialog(
-            title: 'Invaid Login',
-            message: 'Wrong password provided for that user.'));
+        Get.snackbar("Invaid Login", "Wrong password provided for that user.");
       }
     }
+    return false;
 
     // late AuthResponse response;
     // response = await _dbService.loginWithEmailAndPassword(body);
@@ -126,9 +125,9 @@ class FirebaseAuthService {
         password: signUpBody.password!,
       )
           .whenComplete(() async {
-        print('Auth completed');
+        // print('Auth completed');
         await addUserDetail(signUpBody);
-        print('Auth completed 22');
+        // print('Auth completed 22');
         userProfile = UserProfile.fromMap(signUpBody.toMap());
         _localStorageService.isLogin = true;
       });
@@ -243,9 +242,14 @@ class FirebaseAuthService {
     // return response;
   }
 
-  logout() async {
-    await _auth.signOut();
+  Future<bool> logOut() async {
+    await _auth
+        .signOut()
+        .onError((error, stackTrace) => Get.snackbar('Error', '$error'));
+    isLogin = false;
     _localStorageService.isLogin = null;
+    userProfile = null;
+    return true;
   }
 
   /// Generates a cryptographically secure random nonce, to be included in a
