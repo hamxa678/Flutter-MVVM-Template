@@ -22,7 +22,10 @@ class FirebaseService {
   Future<UserProfile> getUserProfile() async {
     await documentReferenceForUser.get().then((value) {
       userProfile = UserProfile.fromMap(value.data());
+      print("this is my email address ${userProfile.email}");
     });
+    print("this is my email address (2) ${userProfile.email}");
+
     return userProfile;
   }
 
@@ -42,16 +45,16 @@ class FirebaseService {
   }
 
   // Future<AuthResponse?>
-   loginWithEmailAndPassword(LoginBody body) async {
+  loginWithEmailAndPassword(LoginBody body) async {
     return null;
   }
 
-  // Future<AuthResponse?> 
+  // Future<AuthResponse?>
   createAccount(SignUpBody body) async {
     return null;
   }
 
-  // Future<AuthResponse?> 
+  // Future<AuthResponse?>
   resetPassword(ResetPasswordBody body) async {
     return null;
   }

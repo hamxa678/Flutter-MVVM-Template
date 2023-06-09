@@ -53,6 +53,33 @@ class RootScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text(
+                      '${model.firebaseAuthService.userProfile!.name}',
+                    ),
+                    20.verticalSpace,
+                    Text(
+                      '${model.firebaseAuthService.userProfile!.phone}',
+                    ),
+                    20.verticalSpace,
+                    Text(
+                      '${model.firebaseAuthService.userProfile!.dob}',
+                    ),
+                    20.verticalSpace,
+                    Text(
+                      '${model.firebaseAuthService.userProfile!.gender}',
+                    ),
+                    20.verticalSpace,
+                    Text(
+                      '${model.firebaseAuthService.userProfile!.email}',
+                    ),
+                    20.verticalSpace,
+                    ElevatedButton(
+                      child: const Text('Log out'),
+                      onPressed: () async {
+                        await model.logOut();
+                      },
+                    ),
+                    20.verticalSpace,
                     (model.cartmodel.todosCount == 0)
                         ? const Text(
                             'No more todos',
