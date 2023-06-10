@@ -95,7 +95,56 @@ class LoginScreen extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 20.h),
-                    _dontHaveAccount()
+                    _dontHaveAccount(),
+                    SizedBox(height: 60.h),
+                    Text('login as'),
+                    SizedBox(height: 20.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            // model.loginWithGoogle();
+                          },
+                          child: Image.asset(
+                            '${staticImage}google.png',
+                            cacheHeight: 449,
+                            cacheWidth: 406,
+                            height: 50.h,
+                            width: 50.w,
+                            fit: BoxFit.scaleDown,
+                          ),
+                        ),
+                        SizedBox(width: 20.w),
+                        InkWell(
+                          onTap: () {
+                            // model.loginWithFacebook();
+                          },
+                          child: Image.asset(
+                            '${staticImage}facebook.png',
+                            cacheHeight: 449,
+                            cacheWidth: 406,
+                            height: 50.h,
+                            width: 50.w,
+                            fit: BoxFit.scaleDown,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        InkWell(
+                          onTap: () {
+                            // model.loginWithFacebook();
+                          },
+                          child: Image.asset(
+                            '${staticImage}github.png',
+                            cacheHeight: 449,
+                            cacheWidth: 406,
+                            height: 50.h,
+                            width: 50.w,
+                            fit: BoxFit.scaleDown,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
