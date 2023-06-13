@@ -166,12 +166,24 @@ class FirebaseAuthService {
         final UserCredential userCredential =
             await _auth.signInWithCredential(credential);
         final User user = userCredential.user!;
+        _localStorageService.isLogin = true;
+        await _getUserProfile();
         return user;
       }
     } catch (e) {
       Get.snackbar('Error', '$e');
     }
     return null;
+  }
+
+  Future<bool> isRecordExist() async {
+    final DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUserUID)
+            .get();
+
+    return snapshot.exists;
   }
 
   /// [signInWithFacebook] method is used for signup with facebook.

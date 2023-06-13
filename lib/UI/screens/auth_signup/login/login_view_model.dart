@@ -33,16 +33,20 @@ class LoginViewModel extends BaseViewModel {
     loginBody.password = passwordController.text;
     bool successLogin =
         await firebaseAuthService.loginWithEmailAndPassword(loginBody);
-    (successLogin)
-        ? Get.offAll(const RootScreen())
-        : Get.snackbar("Error", "Login Error");
+    if (successLogin) {
+      Get.offAll(const RootScreen());
+    }
     setState(ViewState.idle);
   }
 
   loginWithGoogle() async {
     User? user = await firebaseAuthService.signInWithGoogle();
+
+    bool routeToRoot = await firebaseAuthService.isRecordExist();
     if (user != null) {
-      Get.to(SignUpScreen(user: user));
+      (routeToRoot)
+          ? Get.offAll(const RootScreen())
+          : Get.to(SignUpScreen(user: user));
     }
   }
 
