@@ -1,5 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_template/UI/custom_widget/dialogbox/auth_dialog.dart';
 import 'package:flutter_mvvm_template/UI/screens/root/root_screen.dart';
 import 'package:flutter_mvvm_template/core/enums/view_state.dart';
 import 'package:flutter_mvvm_template/core/models/body/signup_body.dart';
@@ -12,6 +12,13 @@ import 'package:intl/intl.dart';
 import '../../../../locator.dart';
 
 class SignUpViewModel extends BaseViewModel {
+  SignUpViewModel(User? user) {
+    print(user?.phoneNumber);
+    nameController.text = user?.displayName ?? "";
+    emailController.text = user?.email ?? "";
+    phoneNoController.text = user?.phoneNumber ?? "";
+  }
+
   /// Below line is used to get instance of our firebase auth service and file picker.
   final _firebaseAuthService = locator<FirebaseAuthService>();
   final _imagePickerService = locator<FilePickerService>();
@@ -102,6 +109,7 @@ class SignUpViewModel extends BaseViewModel {
     emailController.dispose();
     passwordController.dispose();
     locationController.dispose();
+
     super.dispose();
   }
 }
