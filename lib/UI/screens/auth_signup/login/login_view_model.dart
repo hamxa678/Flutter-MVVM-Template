@@ -43,14 +43,7 @@ class LoginViewModel extends BaseViewModel {
     User? user = await firebaseAuthService.signInWithGoogle();
     if (user != null) {
       Get.to(SignUpScreen(user: user));
-    } else {
-      Get.snackbar("Error", "Login Error");
     }
-    // user ?? Get.to(SignUpScreen(user: user));
-    // (successLogin)
-    //     ? Get.offAll(const RootScreen())
-    //     : Get.snackbar("Error", "Login Error");
-    // setState(ViewState.idle);
   }
 
   /// dispose controllers
