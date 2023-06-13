@@ -52,22 +52,24 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20.h),
                     if (user == null)
-                      CustomTextField(
-                        validator: (input) => input!.isValidPassword()
-                            ? null
-                            : "Must contain 8 (lower, upper case, digit, and special charachter) characters",
-                        suffixIcon: GestureDetector(
-                            onTap: () {
-                              model.togglePasswordVisibility();
-                            },
-                            child: (model.isPasswordVisible)
-                                ? const Icon(Icons.visibility_off)
-                                : const Icon(Icons.visibility)),
-                        obscureText: !model.isPasswordVisible,
-                        hintText: 'Password',
-                        controller: model.passwordController,
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 20.h),
+                        child: CustomTextField(
+                          validator: (input) => input!.isValidPassword()
+                              ? null
+                              : "Must contain 8 (lower, upper case, digit, and special charachter) characters",
+                          suffixIcon: GestureDetector(
+                              onTap: () {
+                                model.togglePasswordVisibility();
+                              },
+                              child: (model.isPasswordVisible)
+                                  ? const Icon(Icons.visibility_off)
+                                  : const Icon(Icons.visibility)),
+                          obscureText: !model.isPasswordVisible,
+                          hintText: 'Password',
+                          controller: model.passwordController,
+                        ),
                       ),
-                    if (user == null) SizedBox(height: 20.h),
                     CustomTextField(
                       validator: (input) =>
                           input!.isValidUserName() ? null : "Invalid Name",
@@ -88,7 +90,6 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20.h),
                     _customDropDown(model),
-
                     SizedBox(height: 20.h),
                     CustomTextField(
                       validator: (input) =>
@@ -135,7 +136,7 @@ class SignUpScreen extends StatelessWidget {
                       onPressed: () async {
                         if (model.formKey.currentState!.validate()) {
                           // await model.login();
-                          await model.signUp();
+                          await model.signUp(user != null);
                         }
                       },
                     ),

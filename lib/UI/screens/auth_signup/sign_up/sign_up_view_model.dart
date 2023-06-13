@@ -78,7 +78,8 @@ class SignUpViewModel extends BaseViewModel {
   }
 
   /// below function is used to request for sign up
-  signUp() async {
+  signUp(isSocialAuth) async {
+    print("sign up called");
     signUpBody.name = nameController.text;
     signUpBody.email = emailController.text;
     signUpBody.password = passwordController.text;
@@ -87,14 +88,32 @@ class SignUpViewModel extends BaseViewModel {
     signUpBody.gender = gender;
     signUpBody.phone = phoneNoController.text;
 
+    // isUserAlreadyExist(signUpBody);
+
     setState(ViewState.busy);
-    bool response =
-        await _firebaseAuthService.signupWithEmailAndPassword(signUpBody);
+
+    bool response;
+
+    if (isSocialAuth) {
+      response = await _firebaseAuthService.addUserDetail(signUpBody);
+    } else {
+      response =
+          await _firebaseAuthService.signupWithEmailAndPassword(signUpBody);
+    }
+
     if (response) {
       Get.offAll(const RootScreen());
     }
     setState(ViewState.idle);
   }
+
+  // isUserAlreadyExist(SignUpBody signUpBody) async {
+  //   bool isUserExist =
+  //       await _firebaseAuthService.isUserAlreadyExist(signUpBody.email);
+  //   if (isUserExist) {
+  //     Get.snackbar("Error", "User already exist");
+  //   }
+  // }
 
   /// below function is used to pick image from gallery
   pickImage() async {

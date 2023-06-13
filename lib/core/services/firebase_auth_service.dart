@@ -121,15 +121,9 @@ class FirebaseAuthService {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(
-        email: signUpBody.email!,
-        password: signUpBody.password!,
-      )
+              email: signUpBody.email!, password: signUpBody.password!)
           .whenComplete(() async {
-        // print('Auth completed');
         await addUserDetail(signUpBody);
-        // print('Auth completed 22');
-        userProfile = UserProfile.fromMap(signUpBody.toMap());
-        _localStorageService.isLogin = true;
       });
       log.i("@signupWithEmailAndPassword :: $userCredential");
       return true;
@@ -163,12 +157,19 @@ class FirebaseAuthService {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      final UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
-      final User user = userCredential.user!;
-      return user;
+      final signInMethods =
+          await _auth.fetchSignInMethodsForEmail(googleUser.email);
+      if (signInMethods.contains('password')) {
+        Get.snackbar('Error', 'User with the same email already exists!');
+        return null;
+      } else {
+        final UserCredential userCredential =
+            await _auth.signInWithCredential(credential);
+        final User user = userCredential.user!;
+        return user;
+      }
     } catch (e) {
-      log.e(e);
+      Get.snackbar('Error', '$e');
     }
     return null;
   }
@@ -228,8 +229,12 @@ class FirebaseAuthService {
   }
 
   /// [addUserDetail] method is used for adding user details in firestore during signup.
-  addUserDetail(SignUpBody signUpBody) async {
-    await documentReference.set(signUpBody.toMap());
+  Future<bool> addUserDetail(SignUpBody signUpBody) async {
+    await documentReference.set(signUpBody.toMap()).whenComplete(() {
+      userProfile = UserProfile.fromMap(signUpBody.toMap());
+      _localStorageService.isLogin = true;
+    });
+    return true;
   }
 
   /// This method is used for deleting user details in firestore.
