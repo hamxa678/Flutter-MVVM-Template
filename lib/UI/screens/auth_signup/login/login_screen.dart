@@ -90,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                               color: Colors.white),
                       onPressed: () async {
                         if (model.formKey.currentState!.validate()) {
-                          await model.login();
+                          await model.loginWithEmailAndPassword();
                         }
                       },
                     ),
@@ -104,7 +104,7 @@ class LoginScreen extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            // model.loginWithGoogle();
+                            model.loginWithGoogle();
                           },
                           child: Image.asset(
                             '${staticImage}google.png',
@@ -115,7 +115,7 @@ class LoginScreen extends StatelessWidget {
                             fit: BoxFit.scaleDown,
                           ),
                         ),
-                        SizedBox(width: 20.w),
+                        SizedBox(width: 15.w),
                         InkWell(
                           onTap: () {
                             // model.loginWithFacebook();
@@ -129,13 +129,14 @@ class LoginScreen extends StatelessWidget {
                             fit: BoxFit.scaleDown,
                           ),
                         ),
-                        SizedBox(height: 20.h),
+                        SizedBox(width: 15.w),
                         InkWell(
                           onTap: () {
                             // model.loginWithFacebook();
                           },
+                          //TODO: add github logo image here
                           child: Image.asset(
-                            '${staticImage}github.png',
+                            '${staticImage}apple.png',
                             cacheHeight: 449,
                             cacheWidth: 406,
                             height: 50.h,

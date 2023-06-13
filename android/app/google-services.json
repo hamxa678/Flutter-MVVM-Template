@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "646748873521-rtrhg4emvnmqu8p077e4a4dbikue1qkj.apps.googleusercontent.com",
+          "client_id": "646748873521-litvg2ggv1gi2ohldpa6e5rbs3kl0vv7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +27,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "646748873521-rtrhg4emvnmqu8p077e4a4dbikue1qkj.apps.googleusercontent.com",
+              "client_id": "646748873521-litvg2ggv1gi2ohldpa6e5rbs3kl0vv7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "646748873521-sl65v528d3ilf9fn9pfl83bl9s142cmv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterMvvmTemplate"
+              }
             }
           ]
         }
@@ -43,7 +50,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "646748873521-rtrhg4emvnmqu8p077e4a4dbikue1qkj.apps.googleusercontent.com",
+          "client_id": "646748873521-hub74ievcldaqsgnsuifbskd07k6l14r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_mvvm_template",
+            "certificate_hash": "74d1b5f86c533556e0877e0c3ab56be36590ca6a"
+          }
+        },
+        {
+          "client_id": "646748873521-litvg2ggv1gi2ohldpa6e5rbs3kl0vv7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -56,8 +71,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "646748873521-rtrhg4emvnmqu8p077e4a4dbikue1qkj.apps.googleusercontent.com",
+              "client_id": "646748873521-litvg2ggv1gi2ohldpa6e5rbs3kl0vv7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "646748873521-sl65v528d3ilf9fn9pfl83bl9s142cmv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterMvvmTemplate"
+              }
             }
           ]
         }

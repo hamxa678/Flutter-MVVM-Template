@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_mvvm_template/UI/screens/auth_signup/sign_up/sign_up_screen.dart';
 import 'package:flutter_mvvm_template/UI/screens/root/root_screen.dart';
 import 'package:flutter_mvvm_template/core/enums/view_state.dart';
 import 'package:flutter_mvvm_template/core/models/body/login_body.dart';
@@ -25,7 +27,7 @@ class LoginViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  login() async {
+  loginWithEmailAndPassword() async {
     setState(ViewState.busy);
     loginBody.email = emailController.text;
     loginBody.password = passwordController.text;
@@ -37,6 +39,21 @@ class LoginViewModel extends BaseViewModel {
     setState(ViewState.idle);
   }
 
+  loginWithGoogle() async {
+    User? user = await firebaseAuthService.signInWithGoogle();
+    if (user != null) {
+      Get.to(SignUpScreen(user: user));
+    } else {
+      Get.snackbar("Error", "Login Error");
+    }
+    // user ?? Get.to(SignUpScreen(user: user));
+    // (successLogin)
+    //     ? Get.offAll(const RootScreen())
+    //     : Get.snackbar("Error", "Login Error");
+    // setState(ViewState.idle);
+  }
+
+  /// dispose controllers
   @override
   void dispose() {
     emailController.dispose();

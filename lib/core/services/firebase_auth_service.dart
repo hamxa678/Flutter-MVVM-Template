@@ -154,17 +154,23 @@ class FirebaseAuthService {
   }
 
   /// [signInWithGoogle] method is used for signup with google.
-  signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    final UserCredential userCredential =
-        await _auth.signInWithCredential(credential);
-    final User? user = userCredential.user;
+  Future<User?> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+      final User user = userCredential.user!;
+      return user;
+    } catch (e) {
+      log.e(e);
+    }
+    return null;
   }
 
   /// [signInWithFacebook] method is used for signup with facebook.

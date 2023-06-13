@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_template/UI/custom_widget/custom_button.dart';
 import 'package:flutter_mvvm_template/UI/custom_widget/custom_textfield.dart';
@@ -12,11 +13,12 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  final User? user;
+  const SignUpScreen({Key? key, this.user}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => SignUpViewModel(),
+      create: (context) => SignUpViewModel(user),
       child: Consumer<SignUpViewModel>(
         builder: (context, model, child) => Scaffold(
           backgroundColor: Colors.white,
@@ -37,7 +39,7 @@ class SignUpScreen extends StatelessWidget {
                       fit: BoxFit.scaleDown,
                     ),
                     SizedBox(height: 50.h),
-                    Text('Sign Up',
+                    Text((user == null) ? 'Sign Up' : 'Add Details',
                         style: TextStyle(
                             fontSize: 35.sp, color: const Color(0xff2441A3))),
                     SizedBox(height: 30.h),
@@ -49,22 +51,23 @@ class SignUpScreen extends StatelessWidget {
                       controller: model.emailController,
                     ),
                     SizedBox(height: 20.h),
-                    CustomTextField(
-                      validator: (input) => input!.isValidPassword()
-                          ? null
-                          : "Must contain 8 (lower, upper case, digit, and special charachter) characters",
-                      suffixIcon: GestureDetector(
-                          onTap: () {
-                            model.togglePasswordVisibility();
-                          },
-                          child: (model.isPasswordVisible)
-                              ? const Icon(Icons.visibility_off)
-                              : const Icon(Icons.visibility)),
-                      obscureText: !model.isPasswordVisible,
-                      hintText: 'Password',
-                      controller: model.passwordController,
-                    ),
-                    SizedBox(height: 20.h),
+                    if (user == null)
+                      CustomTextField(
+                        validator: (input) => input!.isValidPassword()
+                            ? null
+                            : "Must contain 8 (lower, upper case, digit, and special charachter) characters",
+                        suffixIcon: GestureDetector(
+                            onTap: () {
+                              model.togglePasswordVisibility();
+                            },
+                            child: (model.isPasswordVisible)
+                                ? const Icon(Icons.visibility_off)
+                                : const Icon(Icons.visibility)),
+                        obscureText: !model.isPasswordVisible,
+                        hintText: 'Password',
+                        controller: model.passwordController,
+                      ),
+                    if (user == null) SizedBox(height: 20.h),
                     CustomTextField(
                       validator: (input) =>
                           input!.isValidUserName() ? null : "Invalid Name",
@@ -123,7 +126,7 @@ class SignUpScreen extends StatelessWidget {
                     CustomButton(
                       titleWidget: !(model.state == ViewState.busy)
                           ? Text(
-                              'Sign Up',
+                              (user == null) ? 'Sign Up' : 'Add Details',
                               style: TextStyle(
                                   fontSize: 20.sp, color: Colors.white),
                             )
@@ -137,7 +140,7 @@ class SignUpScreen extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 20.h),
-                    _alreadyHaveAccount()
+                    if (user == null) _alreadyHaveAccount()
                   ],
                 ),
               ),
