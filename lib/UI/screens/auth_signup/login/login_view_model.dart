@@ -27,6 +27,7 @@ class LoginViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  /// login with email and password
   loginWithEmailAndPassword() async {
     setState(ViewState.busy);
     loginBody.email = emailController.text;
@@ -39,6 +40,7 @@ class LoginViewModel extends BaseViewModel {
     setState(ViewState.idle);
   }
 
+  /// login with google
   loginWithGoogle() async {
     User? user = await firebaseAuthService.signInWithGoogle();
 
